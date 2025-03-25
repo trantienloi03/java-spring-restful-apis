@@ -7,6 +7,8 @@ import com.trantienloi.jobhunter.demo.service.UserService;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,34 +24,35 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/user")
-    public User createNewUser(@RequestBody User user) {
+    @PostMapping("/users")
+    public ResponseEntity<User> createNewUser(@RequestBody User user) {
         User loi = this.userService.handleCreateUser(user);
-        return loi;
+        return ResponseEntity.status(HttpStatus.CREATED).body(loi);
     }
 
-    @GetMapping("/user")
-    public List<User> getAllUsers() {
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
         List<User> lstUsers = this.userService.getAllUsers();
-        return lstUsers;
+        return ResponseEntity.status(HttpStatus.OK).body(lstUsers);
     }
 
-    @GetMapping("/user/{id}")
-    public User getUserByID(@PathVariable Long id) {
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserByID(@PathVariable Long id) {
         User loi = this.userService.getUserByID(id);
-        return loi;
+        return ResponseEntity.status(HttpStatus.OK).body(loi);
     }
 
-    @DeleteMapping("/user/{id}")
-    public String deleteUserByID(@PathVariable("id") Long id) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUserByID(@PathVariable("id") Long id) {
         this.userService.deleteUserByID(id);
-        return "Xóa thành công user với id " + id;
+        return ResponseEntity.status(HttpStatus.OK).body("Xóa thành công user với id " + id);
 
     }
 
-    @PutMapping("/user")
-    public User updateUser(@RequestBody User oldUser) {
-        return this.userService.handleUpdateUser(oldUser);
+    @PutMapping("/users")
+    public ResponseEntity<User> updateUser(@RequestBody User oldUser) {
+        User user = this.userService.handleUpdateUser(oldUser);
+        return ResponseEntity.ok(user);
 
     }
 
