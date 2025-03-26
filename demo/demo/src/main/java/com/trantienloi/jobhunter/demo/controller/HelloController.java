@@ -2,7 +2,7 @@ package com.trantienloi.jobhunter.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trantienloi.jobhunter.demo.service.errors.IdInvalidException;
+import com.trantienloi.jobhunter.demo.util.errors.IdInvalidException;
 
 import org.springframework.web.bind.annotation.GetMapping;
 

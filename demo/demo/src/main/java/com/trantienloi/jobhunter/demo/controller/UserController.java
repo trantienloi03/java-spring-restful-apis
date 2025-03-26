@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trantienloi.jobhunter.demo.domain.RestResponse;
 import com.trantienloi.jobhunter.demo.domain.User;
 import com.trantienloi.jobhunter.demo.service.UserService;
-import com.trantienloi.jobhunter.demo.service.errors.IdInvalidException;
+import com.trantienloi.jobhunter.demo.util.errors.IdInvalidException;
 
 import java.util.List;
 
