@@ -20,14 +20,13 @@ import com.trantienloi.jobhunter.demo.domain.RestResponse;
 @ControllerAdvice
 public class GlobalException {
 
-    @ExceptionHandler(value = { IdInvalidException.class,
+    @ExceptionHandler(value = {
             UsernameNotFoundException.class,
             BadCredentialsException.class }) // ở đâu ném ra ngoại lệ IdInvalid ở đây hứng
-    public ResponseEntity<RestResponse<Object>> handleIdException(IdInvalidException IdException,
-            UsernameNotFoundException un, BadCredentialsException b) {
+    public ResponseEntity<RestResponse<Object>> handleIdException(Exception ex) {
         RestResponse<Object> rs = new RestResponse<>();
         rs.setStatusCode(HttpStatus.BAD_REQUEST.value());
-        rs.setError(IdException.getMessage());
+        rs.setError(ex.getMessage());
         rs.setMessage("Exception occurs....");
         return ResponseEntity.badRequest().body(rs);
     }

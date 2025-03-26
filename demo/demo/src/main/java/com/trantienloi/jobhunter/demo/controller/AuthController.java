@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trantienloi.jobhunter.demo.domain.User;
 import com.trantienloi.jobhunter.demo.domain.dto.LoginDTO;
+import com.trantienloi.jobhunter.demo.domain.dto.ResponseLoginDTO;
 import com.trantienloi.jobhunter.demo.service.UserService;
 import com.trantienloi.jobhunter.demo.util.SecurityUtil;
 
@@ -36,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO> login(@Valid @RequestBody LoginDTO loginDTO)
+    public ResponseEntity<ResponseLoginDTO> login(@Valid @RequestBody LoginDTO loginDTO)
             throws MethodArgumentNotValidException, BadCredentialsException {
 
         if (loginDTO.getPassworld() == null || loginDTO.getPassworld() == null) {
@@ -52,7 +53,10 @@ public class AuthController {
         // xác thực người dùng => cần viết hàm loadUserByUsername
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        this.securityUtil.createToken(authentication);
-        return ResponseEntity.ok().body(loginDTO);
+        String accessToken = this.securityUtil.createToken(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        ResponseLoginDTO rs = new ResponseLoginDTO();
+        rs.setAccessToken(accessToken);
+        return ResponseEntity.ok().body(rs);
     }
 }
